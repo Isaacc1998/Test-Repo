@@ -1,3 +1,35 @@
-*{margin:0;padding:0}body{overflow:hidden}.background{position:relative;background-size:cover;width:100%;height:100%}#title{position:absolute;display:flex;justify-content:center;border:1px solid #000;background-color:gray;top:50px;width:100%}.background-image{position:absolute;min-width:100%;min-height:100%;z-index:-1}
+/*!*************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
+  \*************************************************************************************************************************************/
+* {
+  margin: 0;
+  padding: 0;
+}
 
-/*# sourceMappingURL=main.css.map*/
+body {
+  overflow: hidden;
+}
+
+.background {
+  position: relative;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+#title {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+  background-color: gray;
+  top: 50px;
+  width: 100%;
+}
+
+.background-image {
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+}
