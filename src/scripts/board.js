@@ -338,10 +338,10 @@ class Board {
           unitClick.id = `${this.unitGrid[row][col].name}`;
           unitClick.className = "unit";
           unitClick.style.position = "absolute";
-          unitClick.style.top = row * (this.cellSize + this.padding);
-          unitClick.style.left = col * (this.cellSize + this.padding);
-          unitClick.style.width = this.cellSize;
-          unitClick.style.height = this.cellSize;
+          unitClick.style.top = `${row * (this.cellSize + this.padding)}px`;
+          unitClick.style.left = `${col * (this.cellSize + this.padding)}px`;
+          unitClick.style.width = `${this.cellSize}px`;
+          unitClick.style.height = `${this.cellSize}px`;
           unitClick.style.zIndex = 101;
           let squares = document.getElementById("squares");
           squares.appendChild(unitClick);
