@@ -4,9 +4,11 @@ import Crate from "../../assets/crate1.png";
 import Rifleman from "../../assets/rifle.png";
 import Grenade from "../../assets/grenade.png";
 import Sniper from "../../assets/sniper.png";
-const Player = require("./player").default;
-const Unit = require("./unit").default;
-const Levels = require("./levels").default;
+import Player from "./player";
+// const Player = require("./player").default;
+import Unit from "./unit";
+// const Unit = require("./unit").default;
+// const Levels = require("./levels").default;
 let count = document.querySelector(".tCount");
 let name = document.querySelector(".name");
 class Board {
@@ -268,20 +270,20 @@ class Board {
     };
   }
 
-  createUnitCanvas() {
-    let arr = [];
-    for (let i = 0; i < this.unitOrder.length; i++) {
-      let unit = document.createElement("canvas");
-      unit.id = `${this.unitOrder[i].name}`;
-      let unitContext = unit.getContext("2d");
+  // createUnitCanvas() {
+  //   let arr = [];
+  //   for (let i = 0; i < this.unitOrder.length; i++) {
+  //     let unit = document.createElement("canvas");
+  //     unit.id = `${this.unitOrder[i].name}`;
+  //     let unitContext = unit.getContext("2d");
 
-      document.body.appendChild(unit);
-      let container = document.getElementById("container");
-      container.appendChild(unit);
-      arr.push(unitContext);
-    }
-    return arr;
-  }
+  //     document.body.appendChild(unit);
+  //     let container = document.getElementById("container");
+  //     container.appendChild(unit);
+  //     arr.push(unitContext);
+  //   }
+  //   return arr;
+  // }
 
   drawBattlefield() {
     this.canvas = document.getElementById("game");
@@ -303,21 +305,27 @@ class Board {
   }
 
   generateHTMLsquares() {
+    let id_count = 0;
     for (let row = 0; row < this.grid.length; row++) {
       for (let col = 0; col < this.grid[row].length; col++) {
         let square = document.createElement("div");
-        square.id = `${this.grid[row][col]}`;
+        square.id = `${id_count}`;
         square.className = "square";
         square.style.position = "absolute";
-        square.style.top = row * (this.cellSize + this.padding);
-        square.style.left = col * (this.cellSize + this.padding);
-        square.style.width = this.cellSize;
-        square.style.height = this.cellSize;
+        // console.log(row, "row");
+        // console.log(col, "col");
+        // console.log(this.cellSize, "cellsize");
+
+        square.style.top = `${row * 69}px`;
+        square.style.left = `${col * 69}px`;
+        square.style.width = `${69}px`;
+        square.style.height = `${69}px`;
         // document.body.appendChild(square);
         square.style.zIndex = 100;
         // this.battlefield.canvas.appendChild(square);
         let squares = document.getElementById("squares");
         squares.appendChild(square);
+        id_count++;
       }
     }
   }
@@ -374,8 +382,8 @@ class Board {
       (this.cellSize + this.padding) * this.grid[0].length - this.padding;
     const h = (this.cellSize + this.padding) * this.grid.length - this.padding;
 
-    this.battlefield.canvas.width = w;
-    this.battlefield.canvas.height = h;
+    // this.battlefield.canvas.width = w;
+    // this.battlefield.canvas.height = h;
 
     // const center = this.getCenter(w, h);
     // this.battlefield.canvas.style.marginLeft = center.x;

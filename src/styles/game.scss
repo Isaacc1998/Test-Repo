@@ -62,13 +62,24 @@ canvas {
   display: flex;
   justify-content: center;
   align-items: center;
+  // display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1011px;
+  height: 619px;
 }
 
 #squares {
+  // position: absolute;
   width: 688px;
   height: 619px;
   top: 78px;
   left: 369px;
+}
+
+#square {
+  width: 69px;
+  height: 69px;
 }
 
 #sub {
