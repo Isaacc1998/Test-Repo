@@ -28,6 +28,14 @@ const config = {
           "sass-loader", // compiles sass to css
         ],
       },
+      {
+        test: /\.png$/,
+        use: [
+          {
+            loader: "file-loader",
+          },
+        ],
+      },
     ],
   },
   plugins: [new MiniCssExtractPlugin()],
