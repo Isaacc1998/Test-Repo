@@ -7,6 +7,61 @@ document.addEventListener("DOMContentLoaded", (e) => {
   // let stage;
   let newGame = new Game(1);
 
+  document.getElementById("confirm-move").addEventListener("click", () => {
+    newGame.board.savePositions();
+    // newGame.board.generateHTMLunits();
+    document.removeEventListener("keydown", newGame.board.moveUnit);
+    let counter = document.getElementById("moveCounter");
+    counter.style.display = "none";
+    let moveOptions = document.getElementsByClassName("moveB");
+    for (let i = 0; i < moveOptions.length; i++) {
+      moveOptions[i].style.display = "block";
+    }
+    move.style.display = "none";
+    document.getElementById("moveText").style.display = "none";
+  });
+
+  document.getElementById("cancel-move").addEventListener("click", () => {
+    let currentPos = newGame.board.unitTurn.pos;
+    let startingPos = newGame.board.startingPos;
+    newGame.board.updateGrid(currentPos[0], currentPos[1], 0);
+    newGame.board.updateGrid(
+      startingPos[0],
+      startingPos[1],
+      newGame.board.unitTurn
+    );
+    newGame.board.unitTurn.pos = startingPos;
+    console.log(newGame.board.unitTurn.pos, "reset unit position");
+    newGame.board.setCurrentMoveCount();
+    // newGame.board.savePositions();
+
+    document.removeEventListener("keydown", newGame.board.moveUnit);
+    let counter = document.getElementById("moveCounter");
+    counter.style.display = "none";
+    let moveOptions = document.getElementsByClassName("moveB");
+    for (let i = 0; i < moveOptions.length; i++) {
+      moveOptions[i].style.display = "block";
+    }
+    // move.style.display = "none";
+    document.getElementById("moveText").style.display = "none";
+  });
+
+  document.getElementById("cancel-move").addEventListener("click", () => {});
+
+  document.getElementById("move").addEventListener("click", () => {
+    let temp = [...newGame.board.unitTurn.pos];
+    newGame.board.startingPos = temp;
+    console.log(newGame.board.startingPos, "starting pos");
+    document.getElementById("left").style.display = "none";
+    document.getElementById("right").style.display = "none";
+    document.getElementById("moveText").style.display = "block";
+  });
+
+  document.getElementById("cancel-attack").addEventListener("click", () => {
+    document.getElementById("attackText").style.display = "none";
+    document.getElementById("moveOption").style.display = "block";
+  });
+
   document.getElementById("start-game").addEventListener("click", () => {
     document.getElementById("start-game").style.display = "none";
     document.getElementById("stage-select").style.display = "block";
@@ -30,6 +85,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     newGame.board.savePositions();
     newGame.board.nextTurn();
     newGame.board.setCurrentMoveCount();
+    newGame.board.moved = false;
     let move = document.getElementById("move");
     let attackText = document.getElementById("attackText");
     attackText.style.display = "none";

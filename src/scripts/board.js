@@ -14,6 +14,9 @@ let name = document.querySelector(".name");
 class Board {
   //edit
   constructor(grid, playerUnits, enemyUnits) {
+    this.moved = false;
+    this.startingPos = [];
+
     this.grid = grid;
     //this.objectGrid = this.createObjectGrid();
     this.units = playerUnits;
@@ -134,8 +137,15 @@ class Board {
           let unitClick = document.getElementById(
             `${this.unitGrid[row][col].name}`
           );
-          unitClick.style.top = row * (this.cellSize + this.padding);
-          unitClick.style.left = col * (this.cellSize + this.padding);
+          unitClick.style.position = "absolute";
+          console.log(
+            this.unitGrid[row][col].name,
+            row,
+            col,
+            "this is unit name"
+          );
+          unitClick.style.top = `${row * 69}px`;
+          unitClick.style.left = `${col * 69}px`;
         }
       }
     }
@@ -195,6 +205,7 @@ class Board {
   }
 
   updateGrid(x, y, value) {
+    // console.log(x, y, "updating grid");
     this.unitGrid[x][y] = value;
   }
 
@@ -209,6 +220,7 @@ class Board {
         );
         this.unitTurn.pos[1]--;
         this.currentMoveCount--;
+        // console.log(this.unitTurn.pos, "tis is unt position");
       }
     } else if (keyCode === 39) {
       if (this.isValidMove(1, 0)) {
@@ -220,6 +232,7 @@ class Board {
         );
         this.unitTurn.pos[1]++;
         this.currentMoveCount--;
+        // console.log(this.unitTurn.pos, "tis is unt position");
       }
     } else if (keyCode === 38) {
       if (this.isValidMove(0, -1)) {
@@ -231,6 +244,7 @@ class Board {
         );
         this.unitTurn.pos[0]--;
         this.currentMoveCount--;
+        // console.log(this.unitTurn.pos, "tis is unt position");
       }
     } else if (keyCode === 40) {
       if (this.isValidMove(0, 1)) {
@@ -242,22 +256,23 @@ class Board {
         );
         this.unitTurn.pos[0]++;
         this.currentMoveCount--;
+        // console.log(this.unitTurn.pos, "tis is unt position");
       }
-    }
-    if (this.currentMoveCount === 0) {
-      document.removeEventListener("keydown", this.moveunit);
-      let counter = document.getElementById("moveCounter");
-      counter.style.display = "none";
-      //add moveOptions
-      let moveOptions = document.getElementsByClassName("moveB");
-      for (let i = 0; i < moveOptions.length; i++) {
-        moveOptions[i].style.display = "block";
-      }
-      move.style.display = "none";
-      return;
     }
     let counter = document.getElementById("moveCounter");
     counter.textContent = `Moves Left: ${this.currentMoveCount}`;
+
+    if (this.currentMoveCount === 0) {
+      document.removeEventListener("keydown", this.moveunit);
+      // let counter = document.getElementById("moveCounter");
+      // counter.style.display = "none";
+      // let moveOptions = document.getElementsByClassName("moveB");
+      // for (let i = 0; i < moveOptions.length; i++) {
+      //   moveOptions[i].style.display = "block";
+      // }
+      // move.style.display = "none";
+      return;
+    }
   };
 
   getCenter(w, h) {
@@ -335,10 +350,14 @@ class Board {
           unitClick.id = `${this.unitGrid[row][col].name}`;
           unitClick.className = "unit";
           unitClick.style.position = "absolute";
-          unitClick.style.top = `${row * (this.cellSize + this.padding)}px`;
-          unitClick.style.left = `${col * (this.cellSize + this.padding)}px`;
-          unitClick.style.width = `${this.cellSize}px`;
-          unitClick.style.height = `${this.cellSize}px`;
+          unitClick.style.top = `${row * 69}px`;
+          unitClick.style.left = `${col * 69}px`;
+          unitClick.style.width = `${69}px`;
+          unitClick.style.height = `${69}px`;
+          // unitClick.style.top = row * (this.cellSize + this.padding);
+          // unitClick.style.left = col * (this.cellSize + this.padding);
+          // unitClick.style.width = this.cellSize;
+          // unitClick.style.height = this.cellSize;
           unitClick.style.zIndex = 101;
           let squares = document.getElementById("squares");
           squares.appendChild(unitClick);
@@ -436,6 +455,11 @@ class Board {
           } else if (this.unitGrid[row][col].type === "atGunner") {
             image2 = this.unitImages[2];
           }
+
+          if (this.unitGrid[row][col].owner === null) {
+            image2.style.transform = "rotate(180deg)";
+          }
+
           this.battlefield.drawImage(
             image2,
             8,
