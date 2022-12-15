@@ -7,12 +7,29 @@
     <link rel="stylesheet" href="./dist/main.css" />
     <script src="./dist/main.js"></script>
     <title></title>
+    /
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Special+Elite&display=swap");
+    </style>
   </head>
 
   <body>
     <div class="background">
       <h1 id="title">Warfare Tactics</h1>
       <img class="background-image" src="assets/background.jpg" />
+      <div id="title-screen">
+        <img class="dogtag" src="assets/dogtag.jpeg" />
+        <div id="play">
+          <div id="start-game">Play</div>
+          <div id="stage-select">
+            <div id="map-text">Select Map:</div>
+            <div class="map" id="standard">1: "Standard"</div>
+            <div class="map" id="bridge">2: "The Bridge"</div>
+          </div>
+          <!-- <div id="about">About</div> -->
+        </div>
+        <!-- <canvas id="menu-background"></canvas> -->
+      </div>
       <div id="view">
         <div id="game-container">
           <canvas id="game" width="688" height="619"></canvas>
@@ -21,9 +38,11 @@
           <div id="squares"></div>
           <div id="sub">
             <div id="status" style="text-align: center">
-              <div id="turnCount">Turn: <span class="tCount">1</span></div>
+              <div id="turnCount">
+                Turn: <span id="tCount" class="tCount">1</span>
+              </div>
               <div id="displayName">
-                <span class="name">Bob</span>
+                <span id="name" class="name">Bob</span>
               </div>
 
               <h3>Status</h3>

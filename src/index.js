@@ -1,10 +1,31 @@
 import Game from "./scripts/game";
 import Board from "./scripts/board";
+import Background from "./scripts/menuBackground";
+import Levels from "./scripts/levels";
 
 document.addEventListener("DOMContentLoaded", (e) => {
+  // let stage;
   let newGame = new Game(1);
 
+  document.getElementById("start-game").addEventListener("click", () => {
+    document.getElementById("start-game").style.display = "none";
+    document.getElementById("stage-select").style.display = "block";
+  });
+
+  document.getElementById("standard").addEventListener("click", () => {
+    newGame.stage = 1;
+    document.getElementById("title-screen").style.display = "none";
+    document.getElementById("view").style.display = "block";
+  });
+
+  document.getElementById("bridge").addEventListener("click", () => {
+    newGame.stage = 2;
+    document.getElementById("title-screen").style.display = "none";
+    document.getElementById("view").style.display = "block";
+  });
+
   let endTurn = document.getElementById("end");
+
   endTurn.addEventListener("click", () => {
     newGame.board.savePositions();
     newGame.board.nextTurn();

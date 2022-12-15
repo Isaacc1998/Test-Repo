@@ -157,17 +157,14 @@ class Board {
 
   fillTiles() {
     let grass = new Image();
-    // grass.src = "../assets/images/_0003_GrassTiles.png";
     grass.src = Grass;
     this.tiles.push(grass);
 
     let dirt = new Image();
-    // dirt.src = "../tiles/Tiles/_0001_DirtTiles.png";
     dirt.src = Dirt;
     this.tiles.push(dirt);
 
     let crate = new Image();
-    // crate.src = "../tiles/crates/TDS04_0018_Box1.png";
     crate.src = Crate;
     this.tiles.push(crate);
   }
@@ -527,11 +524,10 @@ class Board {
       //victory or loss screen
     }
     this.currentTurn++;
-    //console.log(count, 'count')
-    count.textContent = this.currentTurn + 1;
+    document.getElementById("tCount").textContent = this.currentTurn + 1;
     //have to update unit turn, because constructor only called once
     this.unitTurn = this.unitOrder[this.currentTurn % this.unitOrder.length];
-    name.textContent = `${this.unitTurn.name}`;
+    document.getElementById("name").textContent = `${this.unitTurn.name}`;
 
     if (this.unitTurn.type === null) {
       this.enemyAction();

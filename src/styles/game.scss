@@ -17,6 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   // align-items: center;
   // background-size: cover;
   overflow: hidden;
@@ -48,17 +49,17 @@ body {
 }
 
 #game-container {
-  position: relative;
+  position: absolute;
   width: 1011px;
   height: 619px;
 }
 
-canvas {
-  position: absolute;
-}
+// canvas {
+//   position: absolute;
+// }
 
 #canvas-content {
-  position: absolute;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -167,5 +168,79 @@ canvas {
   background-color: rgb(234, 67, 67);
 }
 
-canvas {
+#view {
+  display: none;
 }
+
+#title-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 1011px;
+  height: 619px;
+  border: solid 4px;
+  border-color: rgb(54, 53, 53);
+  background-color: rgb(132, 118, 101);
+}
+
+.dogtag {
+  position: absolute;
+  width: 1011px;
+  height: 619px;
+  filter: blur(7px);
+}
+
+#play {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 44px;
+  font-weight: bold;
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  z-index: 30;
+  padding: 20px;
+  border: 1px solid #000000;
+}
+
+#stage-select {
+  display: none;
+  margin-bottom: 100px;
+}
+
+#map {
+  margin-top: 5px;
+}
+
+#map-text {
+  margin-bottom: 20px;
+  margin-left: 60px;
+}
+
+#start-game,
+.map {
+  cursor: pointer;
+}
+
+#start-game:hover {
+  text-shadow: 0 0 5px #e7e7e7;
+}
+.map:hover {
+  text-shadow: 0 0 5px #e7e7e7;
+}
+
+// #about {
+//   font-size: 36px;
+// }
+
+// #menu-background {
+//   width: 966px;
+//   height: 619px;
+//   z-index: 20;
+// }

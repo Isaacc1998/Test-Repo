@@ -1,3 +1,226 @@
-*{margin:0;padding:0}body{overflow:hidden;width:100vw;height:100vw}.background{position:absolute;display:flex;flex-direction:column;justify-content:center;overflow:hidden;width:100%;height:100%}#title{position:absolute;display:flex;justify-content:center;border:1px solid #000;background-color:gray;top:50px;width:100%}.background-image{position:absolute;width:100%;height:100%;z-index:-1}#view{display:flex;justify-content:center;align-items:center}#game-container{position:relative;width:1011px;height:619px}canvas{position:absolute}#canvas-content{position:absolute;display:flex;justify-content:center;align-items:center;margin-left:auto;margin-right:auto;width:1011px;height:619px}#squares{width:688px;height:619px;top:78px;left:369px}#square{width:69px;height:69px}#sub{display:flex;flex-direction:column;justify-content:center;align-items:center}#status{position:relative;font-family:"Courier New",Courier,monospace;font-weight:lighter;font-size:x-large;width:320px;height:360px;border-style:solid;background-color:#a49a9a}#moveOption{display:flex;position:relative;width:320px;height:160px;border-style:solid;background-color:#a49a9a}#left{display:block;position:relative;bottom:1.5px}#right{display:block;position:relative;bottom:1.5px}#move{position:relative;width:160px;height:82px;background-color:#53c7f1}#attack{position:relative;width:160px;height:82px;background-color:#53c7f1}#items{position:relative;width:160px;height:82px;background-color:#53c7f1}#defend{position:relative;width:160px;height:82px;background-color:#53c7f1}#endTurn{position:relative;border-style:solid;width:320px;height:90px;background-color:#a49a9a}#end{position:relative;width:321px;height:93px;background-color:#ea4343}
+/*!*************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
+  \*************************************************************************************************************************************/
+* {
+  margin: 0;
+  padding: 0;
+}
 
-/*# sourceMappingURL=main.css.map*/
+body {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vw;
+}
+
+.background {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+#title {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+  background-color: gray;
+  top: 50px;
+  width: 100%;
+}
+
+.background-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+#view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#game-container {
+  position: absolute;
+  width: 1011px;
+  height: 619px;
+}
+
+#canvas-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1011px;
+  height: 619px;
+}
+
+#squares {
+  width: 688px;
+  height: 619px;
+  top: 78px;
+  left: 369px;
+}
+
+#square {
+  width: 69px;
+  height: 69px;
+}
+
+#sub {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#status {
+  position: relative;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: lighter;
+  font-size: x-large;
+  width: 320px;
+  height: 360px;
+  border-style: solid;
+  background-color: rgb(164, 154, 154);
+}
+
+#moveOption {
+  display: flex;
+  position: relative;
+  width: 320px;
+  height: 160px;
+  border-style: solid;
+  background-color: rgb(164, 154, 154);
+}
+
+#left {
+  display: block;
+  position: relative;
+  bottom: 1.5px;
+}
+
+#right {
+  display: block;
+  position: relative;
+  bottom: 1.5px;
+}
+
+#move {
+  position: relative;
+  width: 160px;
+  height: 82px;
+  background-color: rgb(83, 199, 241);
+}
+
+#attack {
+  position: relative;
+  width: 160px;
+  height: 82px;
+  background-color: rgb(83, 199, 241);
+}
+
+#items {
+  position: relative;
+  width: 160px;
+  height: 82px;
+  background-color: rgb(83, 199, 241);
+}
+
+#defend {
+  position: relative;
+  width: 160px;
+  height: 82px;
+  background-color: rgb(83, 199, 241);
+}
+
+#endTurn {
+  position: relative;
+  border-style: solid;
+  width: 320px;
+  height: 90px;
+  background-color: rgb(164, 154, 154);
+}
+
+#end {
+  position: relative;
+  width: 321px;
+  height: 93px;
+  background-color: rgb(234, 67, 67);
+}
+
+#view {
+  display: none;
+}
+
+#title-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 1011px;
+  height: 619px;
+  border: solid 4px;
+  border-color: rgb(54, 53, 53);
+  background-color: rgb(132, 118, 101);
+}
+
+.dogtag {
+  position: absolute;
+  width: 1011px;
+  height: 619px;
+  filter: blur(7px);
+}
+
+#play {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 44px;
+  font-weight: bold;
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  z-index: 30;
+  padding: 20px;
+  border: 1px solid #000000;
+}
+
+#stage-select {
+  display: none;
+  margin-bottom: 100px;
+}
+
+#map {
+  margin-top: 5px;
+}
+
+#map-text {
+  margin-bottom: 20px;
+  margin-left: 60px;
+}
+
+#start-game,
+.map {
+  cursor: pointer;
+}
+
+#start-game:hover {
+  text-shadow: 0 0 5px #e7e7e7;
+}
+
+.map:hover {
+  text-shadow: 0 0 5px #e7e7e7;
+}
