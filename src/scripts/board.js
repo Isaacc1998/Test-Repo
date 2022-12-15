@@ -154,14 +154,17 @@ class Board {
   generateUnitImages() {
     let rifleman = new Image();
     rifleman.src = Rifleman;
+    rifleman.id = "rifle1";
     this.unitImages.push(rifleman);
 
     let sniper = new Image();
     sniper.src = Sniper;
+    sniper.id = "sniper1";
     this.unitImages.push(sniper);
 
     let launcher = new Image();
     launcher.src = Grenade;
+    launcher.id = "launcher1";
     this.unitImages.push(launcher);
   }
 
@@ -445,32 +448,48 @@ class Board {
         let x;
         let y;
         let image2;
+        let id;
         if (this.unitGrid[row][col] instanceof Unit) {
           x = this.unitGrid[row][col].pos[1];
           y = this.unitGrid[row][col].pos[0];
           if (this.unitGrid[row][col].type === "rifleman") {
             image2 = this.unitImages[0];
+            id = "rifle1";
           } else if (this.unitGrid[row][col].type === "sniper") {
             image2 = this.unitImages[1];
+            id = "rifle1";
           } else if (this.unitGrid[row][col].type === "atGunner") {
             image2 = this.unitImages[2];
+            id = "launcher1";
           }
 
           if (this.unitGrid[row][col].owner === null) {
-            image2.style.transform = "rotate(180deg)";
+            // image2.style.transform = "rotate(180deg)";
+            // document.getElementById(`${id}`).style.transform = "rotate(180deg)";
+            this.battlefield.drawImage(
+              image2,
+              8,
+              8,
+              48,
+              48,
+              col * (this.cellSize + this.padding),
+              row * (this.cellSize + this.padding),
+              this.cellSize,
+              this.cellSize
+            );
+          } else {
+            this.battlefield.drawImage(
+              image2,
+              8,
+              8,
+              48,
+              48,
+              col * (this.cellSize + this.padding),
+              row * (this.cellSize + this.padding),
+              this.cellSize,
+              this.cellSize
+            );
           }
-
-          this.battlefield.drawImage(
-            image2,
-            8,
-            8,
-            48,
-            48,
-            col * (this.cellSize + this.padding),
-            row * (this.cellSize + this.padding),
-            this.cellSize,
-            this.cellSize
-          );
         }
         // unitContext.drawImage(image, 8, 8, 48, 48, this.unitOrder[i].pos[1] * (this.cellSize + this.padding), this.unitOrder[i].pos[0] * (this.cellSize + this.padding), this.cellSize, this.cellSize);
 
