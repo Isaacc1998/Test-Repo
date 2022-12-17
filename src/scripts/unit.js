@@ -36,11 +36,11 @@ class Unit {
   takeDamage(dmg) {
     console.log("damage");
     this.health = this.health - (dmg - this.defense);
-    if (this.health < 0) {
-      this.health = 0;
-    }
-    if (this.health === 0) {
-      this.alive = false;
+    // if (this.health < 0) {
+    //   this.health = 0;
+    // }
+    if (this.health === 0 || this.health < 0) {
+      this.setAlive(false);
     }
   }
 }

@@ -326,6 +326,79 @@ body {
   text-shadow: 0 0 5px #e7e7e7;
 }
 
+#victory {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 44px;
+  font-weight: bold;
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  z-index: 100;
+  padding: 20px;
+  border: 1px solid #000000;
+}
+
+#winner {
+}
+
+#return {
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fffbfb;
+  background-color: #bcb4b4;
+  width: 300px;
+  height: 80px;
+  border-radius: 0.5rem;
+  border: 0px;
+  z-index: 100;
+}
+
+#top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: solid 2.5px;
+  border-color: #806e6e;
+  height: 70px;
+  background-color: #2e462e;
+  color: #e7e7e7;
+  font-weight: 500;
+}
+
+#mid {
+  border: solid 2.5px;
+  border-color: #806e6e;
+  height: 286px;
+  padding: 8px;
+}
+
+#unitInfo {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding-left: 16px;
+  padding-top: 10px;
+}
+
+#displayName {
+  display: flex;
+  justify-content: center;
+  width: 250px;
+}
+
+#turn-label {
+  margin-right: 10px;
+}
+
 // #about {
 //   font-size: 36px;
 // }

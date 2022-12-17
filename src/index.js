@@ -5,7 +5,18 @@ import Levels from "./scripts/levels";
 
 document.addEventListener("DOMContentLoaded", (e) => {
   // let stage;
-  let newGame = new Game(1);
+  let newGame;
+
+  document.getElementById("return").addEventListener("click", () => {
+    document.getElementById("name").textContent = "Bob";
+    document.getElementById("tCount").textContent = 1;
+    document.getElementById("victory").style.display = "none";
+    document.getElementById("view").style.display = "none";
+
+    document.getElementById("stage-select").style.display = "none";
+    document.getElementById("start-game").style.display = "block";
+    document.getElementById("title-screen").style.display = "";
+  });
 
   document.getElementById("confirm-move").addEventListener("click", () => {
     newGame.board.savePositions();
@@ -59,7 +70,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
   document.getElementById("cancel-attack").addEventListener("click", () => {
     document.getElementById("attackText").style.display = "none";
-    document.getElementById("moveOption").style.display = "block";
+    // document.getElementById("moveOption").style.display = "block";
+    let moveOptions = document.getElementsByClassName("moveB");
+    for (let i = 0; i < moveOptions.length; i++) {
+      moveOptions[i].style.display = "block";
+    }
   });
 
   document.getElementById("start-game").addEventListener("click", () => {
@@ -68,13 +83,36 @@ document.addEventListener("DOMContentLoaded", (e) => {
   });
 
   document.getElementById("standard").addEventListener("click", () => {
-    newGame.stage = 1;
+    newGame = new Game(1);
     document.getElementById("title-screen").style.display = "none";
     document.getElementById("view").style.display = "block";
+    let units = document.getElementsByClassName("unit");
+    for (let i = 0; i < units.length; i++) {
+      units[i].addEventListener("mouseover", (e) => {
+        let stats = newGame.board.findClickedUnit(e.target.id);
+        let info = document.getElementById("unitInfo");
+        info.innerHTML = `
+        Name: ${stats[3]}\n
+        <br>
+        Type: ${stats[4]}\n
+        <br>
+        Alliance: ${stats[5]}
+        <br>
+        <br>
+        HP: ${stats[0]}\n
+        <br>
+        ATK: ${stats[1]}\n
+        <br>
+        DEF: ${stats[2]}\n
+        <br>`;
+      });
+    }
+    //for testing***
+    // newGame.won();
   });
 
   document.getElementById("bridge").addEventListener("click", () => {
-    newGame.stage = 2;
+    newGame = new Game(2);
     document.getElementById("title-screen").style.display = "none";
     document.getElementById("view").style.display = "block";
   });
@@ -94,6 +132,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     for (let i = 0; i < moveOptions.length; i++) {
       moveOptions[i].style.display = "block";
     }
+    document.getElementById("moveText").style.display = "none";
   });
 
   let move = document.getElementById("move");
@@ -127,26 +166,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
     });
   }
 
-  let units = document.getElementsByClassName("unit");
-  for (let i = 0; i < units.length; i++) {
-    units[i].addEventListener("mouseover", (e) => {
-      let stats = newGame.board.findClickedUnit(e.target.id);
-      let info = document.getElementById("unitInfo");
-      info.innerHTML = `HP: ${stats[0]}\n
-                              <br>
-                              ATK: ${stats[1]}\n
-                              <br>
-                              DEF: ${stats[2]}\n
-                              <br>
-                              <br>
-                              Name: ${stats[3]}\n
-                              <br>
-                              Type: ${stats[4]}\n
-                              <br>
-                              Alliance: ${stats[5]}`;
-    });
-  }
-
   let attack = document.getElementById("attack");
   attack.addEventListener("click", () => {
     let moveOptions = document.getElementsByClassName("moveB");
@@ -157,26 +176,36 @@ document.addEventListener("DOMContentLoaded", (e) => {
     let attackText = document.getElementById("attackText");
     attackText.style.display = "block";
 
+    let player = newGame.unitTurn.owner;
+
     let units = document.getElementsByClassName("unit");
     for (let i = 0; i < units.length; i++) {
-      units[i].addEventListener("click", (e) => {
-        if (
-          newGame.board.enemyNames.includes(e.target.id) &&
-          newGame.board.unitTurn.owner !== null
-        ) {
-          newGame.board.attack(e.target.id);
-          newGame.board.savePositions();
-          newGame.board.nextTurn();
-          newGame.board.setCurrentMoveCount();
-          let move = document.getElementById("move");
-          move.style.display = "block";
-          let attackText = document.getElementById("attackText");
-          attackText.style.display = "none";
-          for (let i = 0; i < moveOptions.length; i++) {
-            moveOptions[i].style.display = "block";
+      let that = units[i];
+      // if (player && that.) {
+      // }
+      units[i].addEventListener(
+        "click",
+        (e) => {
+          if (
+            newGame.board.enemyNames.includes(e.target.id) &&
+            newGame.board.unitTurn.owner !== null
+          ) {
+            newGame.board.attack(e.target.id);
+            newGame.board.savePositions();
+            newGame.board.nextTurn();
+            newGame.board.setCurrentMoveCount();
+            let move = document.getElementById("move");
+            move.style.display = "block";
+            let attackText = document.getElementById("attackText");
+            attackText.style.display = "none";
+            for (let i = 0; i < moveOptions.length; i++) {
+              moveOptions[i].style.display = "block";
+            }
           }
-        }
-      });
+          that.removeEventListener();
+        },
+        { once: true }
+      );
     }
   });
 });

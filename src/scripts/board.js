@@ -14,6 +14,7 @@ let name = document.querySelector(".name");
 class Board {
   //edit
   constructor(grid, playerUnits, enemyUnits) {
+    this.death = false;
     this.moved = false;
     this.startingPos = [];
 
@@ -66,6 +67,8 @@ class Board {
       // console.log("before damge");
       attackedUnit.takeDamage(this.unitTurn.attack);
       if (!attackedUnit.isAlive()) {
+        // console.log(attackedUnit.isAlive(), "unit alive state");
+        // console.log("removing unit");
         this.removeUnit(attackedUnit);
       }
     }
@@ -138,12 +141,12 @@ class Board {
             `${this.unitGrid[row][col].name}`
           );
           unitClick.style.position = "absolute";
-          console.log(
-            this.unitGrid[row][col].name,
-            row,
-            col,
-            "this is unit name"
-          );
+          // console.log(
+          //   this.unitGrid[row][col].name,
+          //   row,
+          //   col,
+          //   "this is unit name"
+          // );
           unitClick.style.top = `${row * 69}px`;
           unitClick.style.left = `${col * 69}px`;
         }
@@ -563,15 +566,24 @@ class Board {
   }
 
   nextTurn() {
-    if (this.gameEnd()) {
-      //victory or loss screen
-    }
+    // if (this.gameEnd()) {
+    //   //victory or loss screen
+    // }
     this.currentTurn++;
     document.getElementById("tCount").textContent = this.currentTurn + 1;
     //have to update unit turn, because constructor only called once
-    this.unitTurn = this.unitOrder[this.currentTurn % this.unitOrder.length];
-    document.getElementById("name").textContent = `${this.unitTurn.name}`;
+    if (this.death === true) {
+      this.unitTurn =
+        this.unitOrder[this.currentTurn % (this.unitOrder.length + 1)];
+      // console.log(this.currentTurn % (this.unitOrder.length + 1), "index");
+    } else {
+      this.unitTurn = this.unitOrder[this.currentTurn % this.unitOrder.length];
+      // console.log(this.currentTurn % this.unitOrder.length, "index");
+    }
+    // console.log(this.unitOrder, "this the array");
 
+    document.getElementById("name").textContent = `${this.unitTurn.name}`;
+    this.death = false;
     if (this.unitTurn.type === null) {
       this.enemyAction();
     }
@@ -579,40 +591,77 @@ class Board {
   }
 
   gameEnd() {
-    if (this.currentTurn === 50) {
-      console.log("You lose!");
-      return true;
-    }
+    // if (this.currentTurn === 50) {
+    //   console.log("You lose!");
+    //   return true;
+    // }
 
     if (this.won()) {
-      console.log("You win!");
+      // console.log("You win!");
+      let squares = document.getElementById("squares");
+      while (squares.firstChild) {
+        squares.removeChild(squares.lastChild);
+      }
+      document.getElementById("victory").style.display = "block";
+      document.getElementById("winner").innerHTML = "Player 1 Wins!";
       return true;
     } else if (this.lost()) {
-      console.log("You lose!");
+      // console.log("You lose!");
+      let squares = document.getElementById("squares");
+      while (squares.firstChild) {
+        squares.removeChild(squares.lastChild);
+      }
+      document.getElementById("victory").style.display = "block";
+      document.getElementById("winner").innerHTML = "Player 2 Wins!";
       return true;
     }
     return false;
   }
 
   removeUnit(unit) {
-    let index = this.unitOrder.indexOf(unit);
-    if (index > -1) {
-      this.unitOrder.splice(index, 1);
+    // let index = this.unitOrder.indexOf(unit);
+    // if (index > -1) {
+    //   this.unitOrder.splice(index, 1);
+    // }
+    this.death = true;
+    let newUnitOrder = [];
+    for (let i = 0; i < this.unitOrder.length; i++) {
+      if (this.unitOrder[i].name !== unit.name) {
+        newUnitOrder.push(this.unitOrder[i]);
+      }
     }
+    this.unitOrder = newUnitOrder;
+
+    let newEnemies = [];
+    let newAllies = [];
+    for (let i = 0; i < this.enemies.length; i++) {
+      if (this.enemies[i].name !== unit.name) {
+        newEnemies.push(this.enemies[i]);
+      }
+    }
+    this.enemies = newEnemies;
+
+    for (let i = 0; i < this.units.length; i++) {
+      if (this.units[i].name !== unit.name) {
+        newAllies.push(this.units[i]);
+      }
+    }
+    this.units = newAllies;
+
     let x = unit.pos[0];
     let y = unit.pos[1];
     this.unitGrid[x][y] = 0;
-    if (unit.owner === null) {
-      this.enemies.splice(this.enemies.indexOf(unit), 1);
-    } else {
-      this.units.splice(this.units.indexOf(unit), 1);
-    }
+    // if (unit.owner === null) {
+    //   this.enemies.splice(this.enemies.indexOf(unit), 1);
+    // } else {
+    //   this.units.splice(this.units.indexOf(unit), 1);
+    // }
 
-    let deadUnit = document.getElementById(unit.name);
-    deadUnit.remove();
+    // let deadUnit = document.getElementById(unit.name);
+    // deadUnit.remove();
     this.gameEnd();
     this.savePositions();
-    this.nextTurn();
+    // this.nextTurn();
     this.setCurrentMoveCount();
     let move = document.getElementById("move");
     move.style.display = "block";
@@ -620,6 +669,9 @@ class Board {
     for (let i = 0; i < moveOptions.length; i++) {
       moveOptions[i].style.display = "block";
     }
+
+    // console.log(this.enemies, "enemies array");
+    // console.log(this.units, "allies array");
   }
 
   // attack(pos) {
@@ -665,8 +717,12 @@ class Board {
 
   won() {
     if (this.enemies.length === 0) {
+      // console.log(this.enemies.length, "enemies length");
       return true;
     }
+    // if (this.currentTurn === 5) {
+    //   return true;
+    // }
     return false;
   }
 
