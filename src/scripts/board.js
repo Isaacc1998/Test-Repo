@@ -2,8 +2,11 @@ import Grass from "../../assets/grass.png";
 import Dirt from "../../assets/dirt.png";
 import Crate from "../../assets/crate1.png";
 import Rifleman from "../../assets/rifle.png";
+import Rifleman2 from "../../assets/rifle2.png";
 import Grenade from "../../assets/grenade.png";
+import Grenade2 from "../../assets/grenade2.png";
 import Sniper from "../../assets/sniper.png";
+import Sniper2 from "../../assets/sniper2.png";
 import Player from "./player";
 // const Player = require("./player").default;
 import Unit from "./unit";
@@ -23,6 +26,10 @@ class Board {
     this.units = playerUnits;
     this.enemies = enemyUnits;
     this.characterKey = {};
+    this.allyNames = [];
+    for (let i = 0; i < this.units.length; i++) {
+      this.allyNames.push(this.units[i].name);
+    }
     this.enemyNames = [];
     for (let i = 0; i < this.enemies.length; i++) {
       this.enemyNames.push(this.enemies[i].name);
@@ -63,8 +70,8 @@ class Board {
 
   attack(target) {
     let attackedUnit = this.characterKey[target];
+    console.log("before damge");
     if (this.inRange(attackedUnit)) {
-      // console.log("before damge");
       attackedUnit.takeDamage(this.unitTurn.attack);
       if (!attackedUnit.isAlive()) {
         // console.log(attackedUnit.isAlive(), "unit alive state");
@@ -128,6 +135,8 @@ class Board {
           this.unitOrder[i].name,
           type,
           alliance,
+          this.unitOrder[i].move,
+          this.unitOrder[i].range,
         ];
       }
     }
@@ -155,20 +164,50 @@ class Board {
   }
 
   generateUnitImages() {
-    let rifleman = new Image();
+    // let rifleman = new Image();
+    let rifleman = document.createElement("img");
     rifleman.src = Rifleman;
-    rifleman.id = "rifle1";
+    rifleman.id = "rifle";
+    document.body.appendChild(rifleman);
+    rifleman.style.display = "none";
     this.unitImages.push(rifleman);
 
-    let sniper = new Image();
+    // let sniper = new Image();
+    let sniper = document.createElement("img");
     sniper.src = Sniper;
-    sniper.id = "sniper1";
+    sniper.id = "sniper";
+    document.body.appendChild(sniper);
+    sniper.style.display = "none";
     this.unitImages.push(sniper);
 
-    let launcher = new Image();
+    // let launcher = new Image();
+    let launcher = document.createElement("img");
     launcher.src = Grenade;
-    launcher.id = "launcher1";
+    launcher.id = "launcher";
+    document.body.appendChild(launcher);
+    launcher.style.display = "none";
     this.unitImages.push(launcher);
+
+    let rifleman2 = document.createElement("img");
+    rifleman2.src = Rifleman2;
+    rifleman2.id = "rifle2";
+    document.body.appendChild(rifleman2);
+    rifleman2.style.display = "none";
+    this.unitImages.push(rifleman2);
+
+    let sniper2 = document.createElement("img");
+    sniper2.src = Sniper2;
+    sniper2.id = "sniper";
+    document.body.appendChild(sniper2);
+    sniper2.style.display = "none";
+    this.unitImages.push(sniper2);
+
+    let launcher2 = document.createElement("img");
+    launcher2.src = Grenade2;
+    launcher2.id = "launcher";
+    document.body.appendChild(launcher2);
+    launcher2.style.display = "none";
+    this.unitImages.push(launcher2);
   }
 
   fillTiles() {
@@ -216,6 +255,7 @@ class Board {
   }
 
   moveunit = ({ keyCode }) => {
+    let newCount = this.currentMoveCount;
     if (keyCode === 37) {
       if (this.isValidMove(-1, 0)) {
         this.updateGrid(this.unitTurn.pos[0], this.unitTurn.pos[1], 0);
@@ -267,6 +307,12 @@ class Board {
     }
     let counter = document.getElementById("moveCounter");
     counter.textContent = `Moves Left: ${this.currentMoveCount}`;
+
+    if (this.currentMoveCount < newCount) {
+      let name = this.unitTurn.name;
+      let nameElement = document.getElementById(name);
+      nameElement.style.animation = "none";
+    }
 
     if (this.currentMoveCount === 0) {
       document.removeEventListener("keydown", this.moveunit);
@@ -457,18 +503,32 @@ class Board {
           y = this.unitGrid[row][col].pos[0];
           if (this.unitGrid[row][col].type === "rifleman") {
             image2 = this.unitImages[0];
-            id = "rifle1";
+            id = "rifle";
           } else if (this.unitGrid[row][col].type === "sniper") {
             image2 = this.unitImages[1];
-            id = "rifle1";
+            id = "sniper";
           } else if (this.unitGrid[row][col].type === "atGunner") {
             image2 = this.unitImages[2];
-            id = "launcher1";
+            id = "launcher";
           }
 
           if (this.unitGrid[row][col].owner === null) {
             // image2.style.transform = "rotate(180deg)";
             // document.getElementById(`${id}`).style.transform = "rotate(180deg)";
+            // let temp = document.getElementById(`${id}`);
+            if (id === "rifle") {
+              image2 = this.unitImages[3];
+            } else if (id === "sniper") {
+              image2 = this.unitImages[4];
+            } else if (id === "launcher") {
+              image2 = this.unitImages[5];
+            }
+            // console.log(id);
+            // console.log(temp);
+            // temp.style.display = "block";
+            // temp.style.transform = "transform(90deg)";
+            // temp.style.webkitTransform = "rotate(90deg)";
+            // console.log(temp);
             this.battlefield.drawImage(
               image2,
               8,
@@ -566,9 +626,11 @@ class Board {
   }
 
   nextTurn() {
-    // if (this.gameEnd()) {
-    //   //victory or loss screen
-    // }
+    //turn off current units flash
+    let name = this.unitTurn.name;
+    let nameElement = document.getElementById(name);
+    nameElement.style.animation = "none";
+
     this.currentTurn++;
     document.getElementById("tCount").textContent = this.currentTurn + 1;
     //have to update unit turn, because constructor only called once
@@ -588,6 +650,17 @@ class Board {
       this.enemyAction();
     }
     this.gameEnd();
+
+    this.displayStatus(this.unitTurn.name);
+    //turn on new current units flash
+    if (this.unitTurn.owner !== null) {
+      document.getElementById("player-header").innerText = "Player 1's Turn";
+    } else {
+      document.getElementById("player-header").innerText = "Player 2's Turn";
+    }
+    let name2 = this.unitTurn.name;
+    let nameElement2 = document.getElementById(name2);
+    nameElement2.style.animation = "flash 3.5s infinite ease-in";
   }
 
   gameEnd() {
@@ -598,6 +671,8 @@ class Board {
 
     if (this.won()) {
       // console.log("You win!");
+      document.getElementById("player-header").style.display = "none";
+
       let squares = document.getElementById("squares");
       while (squares.firstChild) {
         squares.removeChild(squares.lastChild);
@@ -607,6 +682,8 @@ class Board {
       return true;
     } else if (this.lost()) {
       // console.log("You lose!");
+      document.getElementById("player-header").style.display = "none";
+
       let squares = document.getElementById("squares");
       while (squares.firstChild) {
         squares.removeChild(squares.lastChild);
@@ -616,6 +693,25 @@ class Board {
       return true;
     }
     return false;
+  }
+
+  displayStatus(name) {
+    let stats = this.findClickedUnit(name);
+    let info = document.getElementById("unitInfo");
+    info.innerHTML = `
+    Name: ${stats[3]}\n
+    <br>
+    Type: ${stats[4]}\n
+    <br>
+    Alliance: ${stats[5]}
+    <br>
+    <br>
+    HP: ${stats[0]}\n
+    <br>
+    ATK: ${stats[1]}  DEF: ${stats[2]}\n
+    <br>
+    Move: ${stats[6]}  Range: ${stats[7]}\n
+    <br>`;
   }
 
   removeUnit(unit) {
@@ -716,13 +812,13 @@ class Board {
   }
 
   won() {
-    if (this.enemies.length === 0) {
-      // console.log(this.enemies.length, "enemies length");
-      return true;
-    }
-    // if (this.currentTurn === 5) {
+    // if (this.enemies.length === 0) {
+    //   // console.log(this.enemies.length, "enemies length");
     //   return true;
     // }
+    if (this.currentTurn === 15) {
+      return true;
+    }
     return false;
   }
 
