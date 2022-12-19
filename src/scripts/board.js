@@ -812,13 +812,13 @@ class Board {
   }
 
   won() {
-    // if (this.enemies.length === 0) {
-    //   // console.log(this.enemies.length, "enemies length");
-    //   return true;
-    // }
-    if (this.currentTurn === 15) {
+    if (this.enemies.length === 0) {
+      // console.log(this.enemies.length, "enemies length");
       return true;
     }
+    // if (this.currentTurn === 15) {
+    //   return true;
+    // }
     return false;
   }
 

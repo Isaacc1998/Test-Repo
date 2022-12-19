@@ -289,6 +289,7 @@ body {
 }
 
 #play {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -298,7 +299,7 @@ body {
   font-family: "Courier New", Courier, monospace;
   font-size: 44px;
   font-weight: bold;
-  position: absolute;
+  // position: absolute;
   width: 500px;
   height: 300px;
   z-index: 30;
@@ -419,6 +420,28 @@ body {
   color: #e7e7e7;
   background-color: rgba(0, 0, 0, 0.4);
   display: none;
+}
+
+.title-game {
+  position: absolute;
+  bottom: 250px;
+  width: 500px;
+  right: 12px;
+  font-size: 48px;
+}
+
+#temp-view {
+  width: 688px;
+  height: 619px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.4);
+  right: 550px;
+  font-size: 26px;
+  font-weight: 600;
 }
 
 @keyframes flash {

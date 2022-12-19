@@ -122,9 +122,13 @@ document.addEventListener("DOMContentLoaded", (e) => {
     // console.log(document.getElementById(name));
   });
 
+  document.getElementById("bridge").addEventListener("click", () => {});
+
   document.getElementById("bridge").addEventListener("click", () => {
     newGame = new Game(2);
+    // document.getElementById("player-header").style.display = "flex";
     document.getElementById("title-screen").style.display = "none";
+    document.getElementById("temp-view").style.display = "flex";
     document.getElementById("view").style.display = "block";
   });
 
